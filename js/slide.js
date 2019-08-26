@@ -3,21 +3,37 @@ export default class Slide {
     this.slide = document.querySelector(slide);
     this.wrapper = document.querySelector(wrapper);
     
+    this.distance = {
+      finalPosition : 0,
+      startX : 0,
+      movement: 0, 
+    }
   }
 
   onStart(event){
     event.preventDefault();
-    console.log('mousedown');
+    this.distance.startX = event.clientX;
     this.wrapper.addEventListener('mousemove', this.onMove);
   }
 
+  moveSlide(distX){
+    this.distance.movePosition = distX;
+    this.slide.style.transform = `translate3d(${distX}px, 0, 0)`;
+  }
+
   onMove(event){
-    console.log('moveu');
+    const finalPosition = this.updatePosition(event.clientX);
+    this.moveSlide(finalPosition);
+  }
+
+  updatePosition(clientX){
+    this.distance.movement = (this.distance.startX - event.clientX) * 1.6;
+    return this.distance.finalPosition - this.distance.movement;
   }
 
   onEnd(event){
-    console.log('acabou');
     this.wrapper.removeEventListener('mousemove', this.onMove);
+    this.distance.finalPosition = this.distance.movePosition;
   }
 
   addSlideEvents(){
