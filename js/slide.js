@@ -7,6 +7,13 @@ export default class Slide {
     this.dist = { finalPosition: 0, startX: 0, movement: 0 }
     
     this.activeClass = 'active';
+
+    /**
+     * Evento que avisa visualmente
+     * carregando as bolinhas de 
+     * acordo com a imagem
+     */
+    this.changeEvent = new Event('changeEvent');
   }
 
   transition(active) {
@@ -98,6 +105,7 @@ export default class Slide {
     this.slidesIndexNav(index);
     this.dist.finalPosition = activeSlide.position;
     this.changeActiveClass();
+    this.wrapper.dispatchEvent(this.changeEvent);
   }
 
   changeActiveClass(){
