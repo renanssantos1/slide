@@ -54,9 +54,52 @@ export default class Slide {
     this.onEnd = this.onEnd.bind(this);
   }
 
+
+  // metodo que calcula
+  // a posição do item
+  // e o coloca no centro do display
+  slidePosition(slide){
+    // total da tela menos o total do item / 2
+    const margin = (this.wrapper.offsetWidth - slide.offsetWidth) / 2;
+    return -(slide.offsetLeft - margin);
+  }
+
+  // Slides config
+  // pega a posição do slide
+  // salva a posição da imagem
+  slideConfig(){
+    this.slideArray = [...this.slide.children].map((element) => {
+      const position = this.slidePosition(element)
+      return {
+        position,
+        element,
+      }
+    });
+  }
+
+  // saber quando chegou no fim
+  // ou no inicio do slide.
+  slideIndexNav(index){
+    const last = this.slideArray.length - 1;
+    this.index = {
+      prev: index ? -1 : undefined,
+      active: index,
+      next : index === last ? undefined : index + 1,
+    };
+  }
+
+  // metodo que muda o slide, de acordo
+  // com o index que passarmos para ele
+  changeSlide(index){
+    const activeSlide = this.slideArray[index].position;
+    this.moveSlide(activeSlide);
+    this.dist.finalPosition = activeSlide.position;
+  }
+
   init() {
     this.bindEvents();
     this.addSlideEvents();
+    this.slideConfig();
     return this;
   }
 }
