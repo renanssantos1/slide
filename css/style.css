@@ -21,6 +21,10 @@ img {
   display: flex;
 }
 
+.slide:hover{
+  will-change: transform;
+}
+
 /* pode ser uma div
   no exemplo cada item é 
   um li.
@@ -30,4 +34,16 @@ img {
   width: 80vh;
   max-width: 800px;
   margin: 0 20px;
+  opacity: .8;
+  
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0,0,0,.4);
+  transform: scale(.8);
+  transition: .4s;
+}
+
+.slide li.active {
+  opacity: 1;
+  transform: scale(1)
 }
